@@ -6,6 +6,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import CartList from "../../components/CartList";
 const { Navigator, Screen } = createStackNavigator();
 import CartButton from "../../components/buttons/CartButton";
+import Signin from "../authentication/Signin";
+import Signup from "../authentication/Signup";
+
 const RootNavigator = () => {
   return (
     <Navigator
@@ -38,6 +41,17 @@ const RootNavigator = () => {
         }}
       />
       <Screen name="Cart" component={CartList} />
+      <Screen
+        name="Signin"
+        component={Signin}
+        options={{ headerShown: false }}
+      />
+
+      <Screen
+        name="Signup"
+        component={Signup}
+        options={{ headerShown: false }}
+      />
     </Navigator>
   );
 };
