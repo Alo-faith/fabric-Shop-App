@@ -1,18 +1,23 @@
 import { computed, decorate, observable } from "mobx";
-// import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-community/async-storage";
+import { Alert } from "react-native";
 
 class CartStore {
   items = [];
-  //   items = [
-  //     {
-  //       itemId: 1,
-  //       quantity: 5,
-  //     },
-  //     {
-  //       itemId: 2,
-  //       quantity: 3,
-  //     },
-  //   ];
+  // items = [
+  //   {
+  //     itemId: 2,
+  //     quantity: 5,
+  //   },
+  //   {
+  //     itemId: 4,
+  //     quantity: 3,
+  //   },
+  // ];
+  fetchCart = async () => {
+    const items = await AsyncStorage.getItem("myCart");
+    this.items = items ? JSON.parse(items) : [];
+  };
 
   addItem = async (newItem) => {
     const foundItem = this.items.find((item) => item.itemId === newItem.itemId);
@@ -26,14 +31,14 @@ class CartStore {
     this.items.forEach((item) => (total += item.quantity));
     return total;
   }
-  fetchCart = async () => {
-    const items = await AsyncStorage.getItem("myCart");
-    this.items = JSON.parse(items);
-  };
 
   removeItemFromCart = async (itemId) => {
     this.items = this.items.filter((_item) => _item.itemId !== itemId);
     await AsyncStorage.setItem("myCart", JSON.stringify(this.items));
+  };
+  checkoutCart = () => {
+    this.items = [];
+    Alert.alert("Thank ypou ");
   };
 }
 decorate(CartStore, {
