@@ -1,17 +1,19 @@
 import React from "react";
 
 // Styling
-import logo from "../../media/logo.png";
-import { HomeBackground, ButtonStyled } from "./styles";
+import logo from "../../media/logo2.jpg";
+import { HomeBackground, ButtonStyled, TopStyling, Title } from "./styles";
+import { View, Text } from "native-base";
 
 const Home = ({ navigation }) => {
   return (
-    <>
-      <HomeBackground source={logo}></HomeBackground>
+    <HomeBackground source={logo}>
       <ButtonStyled onPress={() => navigation.navigate("Shops")}>
-        Click here to skip
+        <TopStyling>
+          <Title> Click here to skip </Title>
+        </TopStyling>
       </ButtonStyled>
-    </>
+    </HomeBackground>
   );
 };
 

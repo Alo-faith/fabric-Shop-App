@@ -1,12 +1,11 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
 import Home from "../Home";
 import ShopList from "../ShopList";
 import FabricList from "../FabricList";
 import { createStackNavigator } from "@react-navigation/stack";
-
+import CartList from "../../components/CartList";
 const { Navigator, Screen } = createStackNavigator();
-
+import CartButton from "../../components/buttons/CartButton";
 const RootNavigator = () => {
   return (
     <Navigator
@@ -25,7 +24,7 @@ const RootNavigator = () => {
       <Screen
         name="Shops"
         component={ShopList}
-        options={{ title: "Choose a Shop" }}
+        options={{ title: "Choose a Shop", headerRight: () => <CartButton /> }}
       />
       <Screen
         name="Fabrics"
@@ -34,9 +33,11 @@ const RootNavigator = () => {
           const { shop } = route.params;
           return {
             title: shop.name,
+            headerRight: () => <CartButton />,
           };
         }}
       />
+      <Screen name="Cart" component={CartList} />
     </Navigator>
   );
 };
