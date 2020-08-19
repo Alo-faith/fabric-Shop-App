@@ -15,7 +15,7 @@ import itemStore from "../../stores/itemStore";
 import cartStore from "../../stores/cartStore";
 
 const FabricItem = ({ item }) => {
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
 
   const handleAdd = () => {
     const newItem = { quantity, itemId: item.id };
