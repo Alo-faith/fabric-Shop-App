@@ -8,10 +8,16 @@ import {
   AuthTextInput,
   AuthButtonText,
   AuthButton,
+  AuthButtonText2,
+  AuthButton2,
 } from "./styles";
 
 // Store
 import authStore from "../../stores/authStore";
+import Feather from "react-native-vector-icons/Feather";
+import { TouchableOpacity } from "react-native";
+import * as Animatable from "react-native-animatable";
+import { Text } from "native-base";
 
 const Signup = ({ navigation }) => {
   const [user, setUser] = useState({
@@ -21,9 +27,17 @@ const Signup = ({ navigation }) => {
     email: "",
     password: "",
   });
+  const [isValidUser, setValid] = useState(true);
+  const [showPass, setShowPass] = useState(false);
+  const updateShowPass = () => {
+    setShowPass(!showPass);
+  };
   const handleSubmit = async () => {
     await authStore.signup(user);
-    if (authStore.user) navigation.navigate("Home");
+    if (authStore.user) navigation.navigate("Shops");
+    else {
+      setValid(false);
+    }
   };
 
   return (
@@ -55,11 +69,28 @@ const Signup = ({ navigation }) => {
         onChangeText={(password) => setUser({ ...user, password })}
         placeholder="Password"
         placeholderTextColor="#A6AEC1"
-        secureTextEntry={true}
+        secureTextEntry={showPass ? false : true}
       />
-      <AuthButton>
+      <TouchableOpacity onPress={updateShowPass}>
+        {!showPass ? (
+          <Feather name="eye-off" color="grey" size={15} />
+        ) : (
+          <Feather name="eye" color="grey" size={15} />
+        )}
+      </TouchableOpacity>
+
+      {!isValidUser ? (
+        <Animatable.View animation="fadeInLeft" duration={400}>
+          <Text style={{ color: "red" }}>Invalid data </Text>
+        </Animatable.View>
+      ) : null}
+
+      <AuthButton full>
         <AuthButtonText onPress={handleSubmit}>Sign up</AuthButtonText>
       </AuthButton>
+      <AuthButton2 full onPress={() => navigation.navigate("Signin")}>
+        <AuthButtonText2>Sign in</AuthButtonText2>
+      </AuthButton2>
     </AuthContainer>
   );
 };
