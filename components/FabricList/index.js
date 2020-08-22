@@ -11,7 +11,7 @@ import FabricItem from "./Fabricitem";
 import itemStore from "../../stores/itemStore";
 
 const FabricList = ({ navigation, route }) => {
-  if (itemStore.loading) return <Text>loading</Text>;
+  if (itemStore.loading) return <Spinner color="lightblue" />;
   const { shop } = route.params;
 
   const itemsList = shop.fabrics

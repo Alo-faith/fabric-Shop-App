@@ -8,6 +8,7 @@ import {
   Button,
   Text,
   body,
+  Body,
 } from "native-base";
 import NumericInput from "react-native-numeric-input";
 import { ItemStyled } from "./styles";
@@ -30,8 +31,10 @@ const FabricItem = ({ item }) => {
             uri: item.image || "",
           }}
         />
-
-        <ItemStyled>{item.name}</ItemStyled>
+        <Left>
+          <ItemStyled>{item.name}</ItemStyled>
+          <Text note>{item.price} Kd /meter</Text>
+        </Left>
       </Left>
 
       <Right>
@@ -43,7 +46,7 @@ const FabricItem = ({ item }) => {
           totalWidth={60}
           initValue={1}
         />
-        <Button onPress={handleAdd}>
+        <Button transparent onPress={handleAdd}>
           <Text>Add</Text>
         </Button>
       </Right>
