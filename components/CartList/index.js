@@ -9,8 +9,8 @@ import { CheckButton, CheckButtonText } from "./styles";
 import itemStore from "../../stores/itemStore";
 import CartItem from "./CartItem";
 import cartStore from "../../stores/cartStore";
-
 import authStore from "../../stores/authStore";
+
 const CartList = ({ navigation }) => {
   if (itemStore.loading) return <Text>Loading</Text>;
   const cartList = cartStore.items
@@ -30,7 +30,7 @@ const CartList = ({ navigation }) => {
   return (
     <Content>
       <List>{cartList}</List>
-      <CheckButton onPress={handleCheckout}>
+      <CheckButton full onPress={handleCheckout}>
         <CheckButtonText>
           {authStore.user ? "Checkout" : "Signin to checkout"}
         </CheckButtonText>

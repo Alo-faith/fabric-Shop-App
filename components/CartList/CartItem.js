@@ -1,18 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text } from "react-native";
-import { List, Content, ListItem, Thumbnail, Body, Right } from "native-base";
+import { ListItem, Right, Left, Body } from "native-base";
 import { TotalPrice, TrashIcon } from "./styles";
 import cartStore from "../../stores/cartStore";
+import NumericInput from "react-native-numeric-input";
+import { observer } from "mobx-react";
 
 const CartItem = ({ item }) => {
+  const [quantity, setQuantity] = useState(item.quantity);
+  item.quantity = quantity;
+  const handleAdd = () => {
+    const newItem = { quantity, itemId: item.id };
+    cartStore.addItem(newItem);
+  };
   return (
     <ListItem>
+      <Left>
+        <Left>
+          <Text>{item.name}</Text>
+          <Text note>
+            {item.price} KD x {item.quantity}
+          </Text>
+          <TotalPrice>{item.price * item.quantity} KD</TotalPrice>
+        </Left>
+      </Left>
+
       <Body>
-        <Text>{item.name}</Text>
-        <Text note>
-          {item.price} KD x {item.quantity}
-        </Text>
-        <TotalPrice>{item.price * item.quantity} KD</TotalPrice>
+        <Right>
+          <NumericInput
+            rounded
+            value={quantity}
+            onChange={setQuantity}
+            totalHeight={30}
+            totalWidth={60}
+            minValue={1}
+            initValue={item.quantity}
+            onPress={handleAdd()}
+          />
+        </Right>
       </Body>
       <Right>
         <TrashIcon
@@ -25,4 +50,4 @@ const CartItem = ({ item }) => {
   );
 };
 
-export default CartItem;
+export default observer(CartItem);
