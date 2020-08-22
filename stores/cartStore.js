@@ -21,7 +21,7 @@ class CartStore {
 
   addItem = async (newItem) => {
     const foundItem = this.items.find((item) => item.itemId === newItem.itemId);
-    if (foundItem) foundItem.quantity += newItem.quantity;
+    if (foundItem) foundItem.quantity = newItem.quantity;
     else this.items.push(newItem);
     await AsyncStorage.setItem("myCart", JSON.stringify(this.items));
   };

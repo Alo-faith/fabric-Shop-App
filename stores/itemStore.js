@@ -7,15 +7,17 @@ import slugify from "react-slugify";
 class ItemStore {
   items = [];
   loading = true;
+
   fetchItems = async () => {
     try {
-      const response = await instance.get("/fabrics");
-      this.items = response.data;
+      const res = await instance.get("/fabrics");
+      this.items = res.data;
       this.loading = false;
     } catch (error) {
       console.error("ItemStore -> fetchItems -> error", error);
     }
   };
+
   getItemById = (itemId) => this.items.find((item) => item.id === itemId);
 }
 
