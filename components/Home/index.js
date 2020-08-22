@@ -2,19 +2,38 @@ import React from "react";
 
 // Styling
 import logo from "../../media/logo2.jpg";
-import { HomeBackground, ButtonStyled, TopStyling, Title } from "./styles";
-import { View, Text } from "native-base";
+import { HomeBackground, TopStyling, Title } from "./styles";
+import authStore from "../../stores/authStore";
+import { observer } from "mobx-react";
 
 const Home = ({ navigation }) => {
   return (
     <HomeBackground source={logo}>
-      <ButtonStyled onPress={() => navigation.navigate("Shops")}>
+      {!authStore.user ? (
         <TopStyling>
-          <Title> Click here to skip </Title>
+          <Title onPress={() => navigation.navigate("Shops")}>
+            Click here to skip
+          </Title>
+
+          <Title
+            style={{ color: "blue" }}
+            onPress={() => navigation.navigate("Signin")}
+          >
+            Sign in
+          </Title>
         </TopStyling>
-      </ButtonStyled>
+      ) : (
+        <TopStyling>
+          <Title
+            style={{ color: "blue" }}
+            onPress={() => navigation.navigate("Signin")}
+          >
+            Enter
+          </Title>
+        </TopStyling>
+      )}
     </HomeBackground>
   );
 };
 
-export default Home;
+export default observer(Home);
